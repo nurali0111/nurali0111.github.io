@@ -1,0 +1,127 @@
+*{
+padding: 0;
+margin: 0;
+box-sizing: border-box;
+}
+@font-face{
+    font-family: Roboto;
+    src: url(../fonts/Roboto-Regular.ttf);
+}
+
+body{
+
+background-image: url(../img/art-2.jpg); 
+background-size: 100%;
+    background-attachment: fixed; 
+    padding: 30px;
+    font-family: Roboto;
+}
+
+main{
+    margin-top: 200px;
+width: 80%;
+padding: 80px;
+margin: 10%;    
+margin-left: 10%;
+background-color: rgb(17, 240, 147);
+ display:flex ;
+flex-wrap: wrap;
+justify-content: center;
+box-shadow: 0 0 10px 2px rgb(0, 255, 179);       
+}
+
+.photo{
+width: 180px;
+height: 180px;
+
+margin: 10px;
+border-radius: 100px;
+transition: all 3.0s ease;
+border: 1px solid red;
+cursor: pointer;
+
+}
+
+.video{
+    display: inline;
+    
+}
+.video1{
+margin: 10px;
+
+}
+.video2{
+    margin: 10px;
+}
+
+h1{
+text-align: center;
+text-shadow: rgb(1, 3, 5) 2px 2px;
+width: 100%;
+
+}
+p{
+ width: 100%;
+    text-align: center;
+font-size: 20px;
+
+}
+
+  
+.photo:hover{
+    
+    transform: rotate(362deg) scale(3);
+    background-size: 100%;
+}
+.container .btn:hover {
+    background-color: yellowgreen;}
+.photo1{
+    background-image: url(../img/1.jpg) ;
+background-size: 110%;
+}
+.photo2{
+    background-image: url(../img/photo2.jpeg);
+}
+.photo3{
+    background-image: url(../img/photo3.jpeg);
+background-size: 100%;
+}
+.photo4{
+background-image: url(../img/photo4.jpeg);
+background-size: 50% ;
+}
+.photo5{
+background-image: url(../img/photo5.jpeg);
+background-size: 75%;
+}
+.photo6{
+background-image: url(../img/photo6.jpeg);
+background-size: 100%;
+}
+.photo7{
+background-image: url(../img/photo7.jpeg);
+background-size: 100%;
+}
+.photo8{
+    background-image: url(../img/photo8.jpeg);
+    background-size: 100%;
+}
+.photo9{
+    background-image: url(../img/photo9.jpeg);
+    background-size: 50%;
+}
+.photo10{
+background-image: url(../img/photo10.jpeg);
+background-size:100% ;
+}
+.photo11{
+    background-image: url(../img/photo12.jpeg);
+    background-size: 70%;
+    }
+    
+
+    .photo12{
+        background-image: url(../img/photo11.jpeg);
+        background-size:100% ;
+        }
+        
