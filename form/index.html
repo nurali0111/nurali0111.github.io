@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,500&map;subset=cyrillic">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        html{
+            text-align: center;
+            font-size: 16px;
+        }
+        body{
+            margin: 0;
+            font-family: "Roboto", sans-serif;
+            background-color: aquamarine;
+        }
+        .form-container{
+            background-color: rgb(22, 238, 220);
+            max-width: 450px;
+            width: 95%;
+            margin: auto;
+            padding: 40px;
+        }
+        #form{
+
+        }
+
+        textarea{
+            overflow: hidden;
+            resize: none;
+            padding-top: 0;
+            height: 3.5rem;
+            padding-left: 0;
+        }
+
+        input, textarea{
+            display: block;
+            width: 100%;
+            margin: 0.5rem 0;
+            padding: 0 0 0.8rem;
+            outline: none;
+            font-size: 1rem;
+            letter-spacing: 0.75px;
+            border: none;
+            border-bottom: 1.5px solid #fff;
+            border-radius: 0;
+            transition: 1s ease;
+        }
+
+        input:focus, textarea:focus {
+            /* hex code */
+            border-color: #ffbf02;
+            border-color: rgb(95, 255, 2);            
+        }
+
+        .form-heading{
+            margin-top: 0;
+            font-size: 1.5rem;
+            font-weight: 500;
+            letter-spacing: 0.75px;
+        }
+        .field{
+            margin: 1rem 0;
+        }
+
+        #submit{
+            border: none;
+            background-color: yellow;
+            color: rgb(255, 0, 128);
+            text-shadow: 0 0 2px rgba(255, 0, 0, 0.2);
+            border-radius: 3px;
+            padding: 0.6rem 0;
+            width: 150px;
+            margin-left: calc(100%-150px);
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: 0.2s ease;
+        }
+
+        #submit:active{
+            transform: translate(5px, -10px);
+            box-shadow: none;
+        }
+
+        label{
+            display: block;
+            font-size: 0.9rem;
+            letter-spacing: 0.75px;
+            color: rgb(68, 68, 68);
+            transform: translateY(2rem);
+            transition: 0.5s ease;
+        }
+
+        .focused{
+            transform: translateX(-12.5%) translateY(0.2rem) scale(0.75);
+        }
+
+        input:-webkit-autofill{
+            -webkit-box-shadow: 0 0 0px 1000px  rgb(255, 0, 149) inset;
+        }
+
+
+    </style>
+    <title>Форма обратной связи</title>
+</head>
+<body>
+    <div class="form-container">
+        <h3 class="form-heading">Форма обратной связи</h3>
+        <form id="form">
+            <!-- field - поле -->
+            <div class="field">
+                <label for="name">Имя и фамилия</label>
+                <input type="text" id="name" name="name">     
+            </div>
+            
+            <div class="field">
+                <label for="email">Адрес эл.почты</label>
+                <input type="email" id="email" name="_replyto">
+            </div>
+            
+            <div class="field">
+                <label for="email">Сообщение</label>
+                <textarea name="massage" id="massage" cols="20" rows="5" wrap="hard"></textarea>
+            </div>  
+
+            
+            <input type="submit" id="submit">
+        </form>
+    </div>
+
+    <script>
+        //var - variable
+        var inputs = [].slice.call(document.querySelectorAll("input"));
+
+       var textarea = document.getElementById("massage");
+       textarea.addEventListener("focusin", focusInInputHandler);
+       textarea.addEventListener("focusout", focusOutInputHandler);
+       if(textarea.value != "") {
+               focusInInputHandler.call(textarea);
+           }
+       
+        inputs.forEach(function(input) {
+             if(input.getAttribute("type") !== "submit"){
+                    console.log(input);
+                    if(input.value !== ""){
+                        //var label = document.querySelector('label[for="' + input.id+ '"]');
+                        //label.classList.add("focused");
+                        focusInInputHandler.call(input);
+                    }
+                    input.addEventListener("focusin", focusInInputHandler);
+                    input.addEventListener("focusout", focusOutInputHandler);
+             }            
+        });
+
+        
+
+        function focusInInputHandler(){
+            var label = document.querySelector('label[for="' + this.id+ '"]');
+            console.log(label);
+            label.classList.add("focused");
+        }
+
+        function focusOutInputHandler(){
+            var label = document.querySelector('label[for="' + this.id + '"]');
+            if(this.value == ""){
+                label.classList.remove("focused");
+            }
+            console.log(label);
+        }
+
+        function encode(data){
+            var encodedData = [];
+            for(var key in data){
+                encodedData.push(encodeURIComponent(key) + "=" + encodeURIComponent(data[key]));
+            }
+            return encodedData.join("&");
+        }
+
+        var form = document.getElementById("form");
+
+        form.addEventListener("submit", function(e){
+            //prevent - избегать default - по умолчанию
+            e.preventDefault();
+
+            var data = {
+                "name": form.elements[0].value,
+                "_replyto": form.elements[1].value,
+                "message": form.elements[2].value,
+            }
+
+            //request - запрос
+            request = new XMLHttpRequest();
+            request.open("POST", "https://formspree.io/f/mpzkznvw");
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            request.send(encode(data));
+            form.reset();
+
+            inputs.forEach(function(input){
+                focusOutInputHandler.call(input);
+            });
+            focusOutInputHandler.call(textarea);
+        })
+
+
+
+
+
+    </script>
+
+</body>
+</html>
